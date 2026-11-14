@@ -1,0 +1,179 @@
+.session-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+.session-scenario {
+  font-size: var(--t-head);
+  line-height: 1.35;
+  margin-top: var(--space-2);
+}
+
+.session-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.session-inputs > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.session-mic,
+.session-actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 34px;
+}
+
+.session-clarify {
+  border-left: 2px solid var(--accent);
+  padding: var(--space-2) 0 var(--space-2) var(--space-4);
+  margin: var(--space-4) 0;
+}
+
+.session-block {
+  margin-top: var(--space-6);
+}
+
+.session-blockhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  border-bottom: var(--hairline) solid var(--rule-strong);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+.session-blockhead h2 {
+  font-size: var(--t-head);
+  font-weight: 500;
+}
+.session-blockmeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.session-note {
+  margin-top: var(--space-3);
+}
+.session-sub {
+  margin: var(--space-5) 0 var(--space-2);
+}
+.session-ladder {
+  margin-top: var(--space-4);
+}
+.session-deltas {
+  margin-top: var(--space-4);
+}
+
+/* Ranked diagnosis */
+.ranked {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: rank;
+}
+.ranked li {
+  counter-increment: rank;
+  padding: var(--space-3) 0 var(--space-3) var(--space-5);
+  border-top: var(--hairline) solid var(--rule);
+  position: relative;
+}
+.ranked li:last-child {
+  border-bottom: var(--hairline) solid var(--rule);
+}
+.ranked li::before {
+  content: counter(rank);
+  position: absolute;
+  left: 0;
+  top: var(--space-3);
+  font-family: var(--face-artifact);
+  font-size: var(--t-small);
+  color: var(--ink-faint);
+}
+.ranked li.is-target {
+  border-left: 2px solid var(--accent);
+  padding-left: calc(var(--space-5) - 2px);
+}
+.ranked li.is-target::before {
+  left: var(--space-2);
+  color: var(--accent);
+}
+.ranked-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.ranked-name {
+  font-size: var(--t-body);
+}
+.ranked-flag {
+  color: var(--accent);
+}
+
+/* The response itself, in her register rather than the interface's. */
+.response {
+  border-left: 2px solid var(--accent);
+  padding: var(--space-2) 0 var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-3);
+  max-width: var(--measure);
+  white-space: pre-wrap;
+}
+
+/* Task picker */
+.picker h2 {
+  font-size: var(--t-display);
+  font-weight: 400;
+  margin-bottom: var(--space-3);
+}
+.picker-list {
+  list-style: none;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+}
+.picker-list li {
+  border-top: var(--hairline) solid var(--rule);
+}
+.picker-list li:last-child {
+  border-bottom: var(--hairline) solid var(--rule);
+}
+.picker-task {
+  display: grid;
+  gap: var(--space-1);
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: var(--space-4) 0;
+  cursor: pointer;
+  transition: padding-left var(--dur) var(--ease);
+}
+.picker-task:hover {
+  padding-left: var(--space-3);
+}
+.picker-scenario {
+  font-size: var(--t-body);
+  max-width: var(--measure);
+}
+
+@media (max-width: 860px) {
+  .session-inputs {
+    grid-template-columns: 1fr;
+  }
+}
+
+.session-help {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+}

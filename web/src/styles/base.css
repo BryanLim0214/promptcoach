@@ -1,0 +1,257 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--face-ui);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Focus is never removed, only styled. Full keyboard operation is a Chapter 7
+   commitment, so an invisible focus ring would be a spec violation. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--paper-raised);
+  border: var(--hairline) solid var(--rule-strong);
+  padding: var(--space-2) var(--space-4);
+  z-index: 100;
+}
+.skip-link:focus {
+  left: var(--space-4);
+  top: var(--space-4);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Type roles                                                             */
+/* ---------------------------------------------------------------------- */
+
+/* Small-caps label. Used for every field name in the interface, so the eye can
+   separate chrome from content without a colour or a box doing it. */
+.label {
+  font-size: var(--t-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 500;
+  display: block;
+}
+
+/* The student's own voice. A serif at a larger size, because speech is not
+   interface text and should not look like it. */
+.speech {
+  font-family: var(--face-speech);
+  font-size: var(--t-speech);
+  line-height: var(--lh-speech);
+  font-optical-sizing: auto;
+}
+
+/* The artifact. Monospace, because what she typed is the object under
+   examination and the difference in medium is the difference in content. */
+.artifact {
+  font-family: var(--face-artifact);
+  font-size: var(--t-artifact);
+  line-height: 1.55;
+}
+
+.quiet {
+  color: var(--ink-muted);
+}
+.faint {
+  color: var(--ink-faint);
+}
+.small {
+  font-size: var(--t-small);
+}
+.measure {
+  max-width: var(--measure);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Evidence grade, as a rule weight                                        */
+/* ---------------------------------------------------------------------- */
+/* Direct / Transferred / Argued are ordinal, so they are carried by how solid
+   a line is, not by hue. Solid holds; dashed is borrowed from elsewhere;
+   dotted has never been tested. This reads the same to a colour-blind viewer
+   and prints correctly in black and white. */
+
+.grade-rule {
+  border: 0;
+  border-top-width: 2px;
+  border-top-color: currentColor;
+  margin: 0;
+  width: 1.75rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+.grade-direct .grade-rule {
+  border-top-style: solid;
+}
+.grade-transferred .grade-rule {
+  border-top-style: dashed;
+}
+.grade-argued .grade-rule {
+  border-top-style: dotted;
+}
+
+.grade-direct {
+  color: var(--ink);
+}
+.grade-transferred {
+  color: var(--ink-muted);
+}
+.grade-argued {
+  color: var(--ink-faint);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Structure                                                               */
+/* ---------------------------------------------------------------------- */
+
+.rule {
+  border: 0;
+  border-top: var(--hairline) solid var(--rule);
+  margin: var(--space-5) 0;
+}
+
+.field {
+  display: block;
+  width: 100%;
+  background: var(--paper-raised);
+  border: var(--hairline) solid var(--rule);
+  border-radius: 2px;
+  padding: var(--space-3);
+  resize: vertical;
+}
+.field::placeholder {
+  color: var(--ink-faint);
+}
+.field:hover {
+  border-color: var(--rule-strong);
+}
+
+.btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--hairline) solid var(--ink);
+  border-radius: 2px;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  font-size: var(--t-body);
+  transition: opacity var(--dur) var(--ease);
+}
+.btn:hover:not(:disabled) {
+  opacity: 0.86;
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-quiet {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--rule-strong);
+}
+
+/* Radix tabs, styled as a rule with a marker rather than a pill row. */
+.tabs {
+  display: flex;
+  gap: var(--space-5);
+  border-bottom: var(--hairline) solid var(--rule);
+  padding: 0 var(--space-6);
+}
+.tab {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: var(--space-3) 0;
+  margin-bottom: -1px;
+  cursor: pointer;
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+.tab:hover {
+  color: var(--ink);
+}
+.tab[data-state="active"] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* Radix popover, for citations. A bordered sheet, not a floating card. */
+.popover {
+  background: var(--paper-raised);
+  border: var(--hairline) solid var(--rule-strong);
+  border-radius: 2px;
+  padding: var(--space-4);
+  max-width: 34rem;
+  font-size: var(--t-small);
+  line-height: 1.5;
+  z-index: 40;
+}
+
+.cite-btn {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 1px dotted var(--rule-strong);
+  padding: 0;
+  cursor: help;
+  color: var(--ink-faint);
+  font-family: var(--face-artifact);
+  font-size: var(--t-micro);
+}
+.cite-btn:hover {
+  color: var(--ink);
+}
+
+.page {
+  padding: var(--space-6);
+  margin: 0 auto;
+  max-width: 78rem;
+}

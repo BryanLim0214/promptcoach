@@ -1,0 +1,106 @@
+{
+  "_construction": {
+    "written": "2026-10-24, before any scoring, for Analysis B of eval/fluency_detector_protocol.md",
+    "note": "12 matched pairs. Within a pair the planning content (topic, audience, format, constraints, purpose) is the same; only the English differs. 'fluent' is standard English; 'rough' imitates the English of an English language learner (grammar and spelling errors, simpler vocabulary) with no content element removed. One stated_intent per pair, used for both versions, in plain simple English, so only the typed prompt varies. Content tiers assigned by the author before scoring. No topic or item is reused from eval/benchmark.json. Written by one author: imitated learner English, not learner English.",
+    "n_pairs": 12,
+    "tiers": {"weak": 4, "medium": 4, "strong": 4}
+  },
+  "pairs": [
+    {
+      "id": "fp01",
+      "tier": "weak",
+      "content": "topic only",
+      "stated_intent": "I have to learn about volcanoes for science",
+      "fluent": "Tell me about volcanoes.",
+      "rough": "tell me abot volcano"
+    },
+    {
+      "id": "fp02",
+      "tier": "weak",
+      "content": "topic only",
+      "stated_intent": "We started a unit on magnets",
+      "fluent": "Explain how magnets work.",
+      "rough": "explain how magnet is work"
+    },
+    {
+      "id": "fp03",
+      "tier": "weak",
+      "content": "topic only",
+      "stated_intent": "There is a project on ancient Egypt",
+      "fluent": "Write something about ancient Egypt.",
+      "rough": "write some thing about the egypt of old time"
+    },
+    {
+      "id": "fp04",
+      "tier": "weak",
+      "content": "topic only, request for help",
+      "stated_intent": "My ratios homework is due and I do not get it",
+      "fluent": "Help me with my ratios homework.",
+      "rough": "help me for my ratio homeworks"
+    },
+    {
+      "id": "fp05",
+      "tier": "medium",
+      "content": "topic + audience + length",
+      "stated_intent": "I need to explain ocean food chains for science class",
+      "fluent": "Explain food chains in the ocean for my sixth grade science class in a short paragraph.",
+      "rough": "explain food chain in the ocean for my class of six grade science, short paragraf"
+    },
+    {
+      "id": "fp06",
+      "tier": "medium",
+      "content": "topic + format + one example each",
+      "stated_intent": "I want to make notes on the states of matter",
+      "fluent": "Give me a bulleted list of the three states of matter with one example of each.",
+      "rough": "give me list with bullet of the three state of matter, one example for each one"
+    },
+    {
+      "id": "fp07",
+      "tier": "medium",
+      "content": "topic + form + purpose",
+      "stated_intent": "Our class is putting poems on the wall",
+      "fluent": "Write a short poem about autumn leaves for a classroom display.",
+      "rough": "write short poem of autumn leaf for put on the wall in classroom"
+    },
+    {
+      "id": "fp08",
+      "tier": "medium",
+      "content": "topic + audience + register",
+      "stated_intent": "I am helping a younger student understand earthquakes",
+      "fluent": "Explain why earthquakes happen in simple words for a younger student.",
+      "rough": "explain why earthquake is happen with simple word for student more young"
+    },
+    {
+      "id": "fp09",
+      "tier": "strong",
+      "content": "audience + format + length + tone + two reasons with facts + purpose + revision plan",
+      "stated_intent": "I want the principal to make lunch longer and I will write the final letter myself",
+      "fluent": "Write a persuasive letter to our principal asking for a longer lunch break. Keep it under 150 words, use a polite tone, and give two reasons backed by facts about student focus. I will revise it myself after I see which reason is stronger.",
+      "rough": "write letter to persuade our principal for make lunch break more long. keep it less than 150 word, use polite tone, and give two reason with fact about student focus. i will change it my self after i see which reason is more strong."
+    },
+    {
+      "id": "fp10",
+      "tier": "strong",
+      "content": "audience + format + length + required terms + success criterion + checking purpose",
+      "stated_intent": "I want to check our lab results about circuits",
+      "fluent": "Explain how a simple electric circuit works for my seventh grade lab partner, in five numbered steps, using the words battery, wire and switch. A good answer will say why the bulb goes out when the switch is open, so I can check it against our lab results.",
+      "rough": "explain how simple electric circuit work for my lab partner in 7 grade, in five step with number, use the word battery, wire and switch. good answer will say why the bulb is go off when switch is open, so i can check it with our lab result."
+    },
+    {
+      "id": "fp11",
+      "tier": "strong",
+      "content": "audience + purpose + structure + length + date constraint + follow-up plan",
+      "stated_intent": "My group has a test on the American Revolution",
+      "fluent": "Make a study guide on the causes of the American Revolution for a group of eighth graders reviewing for a test: three causes as headings, two sentences under each, and no dates outside 1763 to 1776. After I read it, I will ask you to quiz me on the one I find hardest.",
+      "rough": "make study guide about cause of american revolution for group of 8 grader who review for test: three cause like heading, two sentence under each one, and no date outside 1763 to 1776. after i read it i will ask you to quiz me on the one is most hard for me."
+    },
+    {
+      "id": "fp12",
+      "tier": "strong",
+      "content": "audience + format + size + local examples + register constraint + targeted-fix plan",
+      "stated_intent": "I need to teach the difference between weather and climate",
+      "fluent": "Compare weather and climate for a fifth grade class in a two-column table with four rows, using one local example in each row. Avoid technical terms, and if anything in the table is wrong, I will point it out and ask you to fix only that row.",
+      "rough": "compare weather and climate for class of 5 grade in table with two column and four row, use one example from local in each row. no use technical word, and if some thing in table is wrong i will tell you and ask fix only that row."
+    }
+  ]
+}

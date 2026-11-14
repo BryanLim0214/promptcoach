@@ -1,0 +1,236 @@
+.guide {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--paper);
+  border-top: var(--hairline) solid var(--rule-strong);
+  z-index: 20;
+  /* No shadow. The rail sits on the page, it does not float above it. */
+}
+
+.guide-inner {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-5) var(--space-4);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) auto;
+  grid-template-areas:
+    "progress progress progress"
+    "body     meta     actions";
+  gap: var(--space-2) var(--space-5);
+  align-items: start;
+}
+
+/* A row of ticks, not a percentage bar. It says "ten things", which is more
+   useful to a viewer than "44%". */
+.guide-progress {
+  grid-area: progress;
+  display: flex;
+  gap: 4px;
+  margin-bottom: var(--space-2);
+}
+.guide-progress span {
+  height: 2px;
+  flex: 1;
+  background: var(--rule);
+  transition: background var(--dur) var(--ease);
+}
+.guide-progress span.is-done {
+  background: var(--accent);
+}
+
+/* --- left: what is happening ------------------------------------------- */
+
+.guide-body {
+  grid-area: body;
+  min-width: 0;
+}
+/* Typed as `p.guide-step` because it also carries `.label`, which sets
+   display:block. Two single-class rules would be decided by bundle order. */
+p.guide-step {
+  margin-bottom: var(--space-1);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.guide-title {
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.guide-caption {
+  font-family: var(--face-speech);
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  max-width: 42rem;
+}
+
+/* --- right: which part of the framework, and its live values ------------ */
+
+.guide-meta {
+  grid-area: meta;
+  min-width: 0;
+  border-left: var(--hairline) solid var(--rule);
+  padding-left: var(--space-5);
+}
+
+.guide-layer {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+.guide-layer-n {
+  font-family: var(--face-artifact);
+  font-size: var(--t-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--accent);
+  padding: 1px var(--space-2);
+  border-radius: 2px;
+}
+.guide-layer-name {
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.guide-layer.is-none .guide-layer-name {
+  color: var(--ink-faint);
+}
+
+.guide-mechanism {
+  font-size: var(--t-small);
+  line-height: 1.45;
+  color: var(--ink-muted);
+  max-width: 40ch;
+}
+
+/* Live values from the run that just happened. A grid rather than prose so a
+   reader can find the number without reading the sentence around it. */
+.guide-readout {
+  margin-top: var(--space-2);
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border-top: var(--hairline) solid var(--rule);
+  border-bottom: var(--hairline) solid var(--rule);
+}
+.guide-readout > div {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  background: var(--paper);
+  padding: 3px 0;
+  align-items: baseline;
+}
+.guide-readout dt {
+  font-size: var(--t-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.guide-readout dd {
+  font-family: var(--face-artifact);
+  font-size: var(--t-small);
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+.guide-readout .is-key dd {
+  color: var(--ink);
+}
+
+.guide-cite {
+  margin-top: var(--space-2);
+  font-family: var(--face-artifact);
+  font-size: var(--t-micro);
+  color: var(--ink-faint);
+  overflow-wrap: anywhere;
+}
+
+.guide-actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  white-space: nowrap;
+  padding-top: var(--space-1);
+}
+
+.go-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--t-body);
+}
+
+/* The page has to clear the rail, or the last thing on it is unreachable.
+   The rail's height swings by more than 100px across the ten steps - a step
+   with a four-row readout is much taller than one with none - so a fixed
+   reserve is wrong at both ends. GuideRail measures itself and publishes
+   --guide-h; the literal is only the pre-measurement fallback. */
+body.touring {
+  padding-bottom: calc(var(--guide-h, 13rem) + var(--space-5));
+}
+
+/* The field currently being written into. A hairline accent, no glow. */
+.is-filling {
+  border-color: var(--accent) !important;
+}
+
+.start-tour {
+  background: none;
+  border: var(--hairline) solid var(--rule-strong);
+  border-radius: 2px;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  font-size: var(--t-small);
+  color: var(--ink-muted);
+}
+.start-tour:hover {
+  color: var(--ink);
+  border-color: var(--ink-muted);
+}
+
+@media (max-width: 1000px) {
+  .guide-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "progress progress"
+      "body     actions"
+      "meta     meta";
+  }
+  .guide-meta {
+    border-left: 0;
+    border-top: var(--hairline) solid var(--rule);
+    padding-left: 0;
+    padding-top: var(--space-3);
+  }
+  .guide-actions {
+    align-items: flex-start;
+  }
+  body.touring {
+    padding-bottom: calc(var(--guide-h, 17rem) + var(--space-5));
+  }
+}
+
+@media (max-width: 620px) {
+  .guide-inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "progress"
+      "body"
+      "meta"
+      "actions";
+  }
+  .guide-readout > div {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .guide-actions {
+    justify-content: space-between;
+  }
+  body.touring {
+    padding-bottom: calc(var(--guide-h, 21rem) + var(--space-5));
+  }
+}

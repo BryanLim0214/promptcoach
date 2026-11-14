@@ -1,0 +1,107 @@
+.gap {
+  display: grid;
+  grid-template-columns: 1fr 120px 1fr;
+  gap: 0;
+  align-items: start;
+  border-top: var(--hairline) solid var(--rule);
+  border-bottom: var(--hairline) solid var(--rule);
+  padding: var(--space-5) 0;
+}
+
+.gap-side {
+  padding: 0 var(--space-5);
+}
+.gap-side:first-child {
+  padding-left: 0;
+}
+.gap-side:last-child {
+  padding-right: 0;
+}
+
+.gap-side h3 {
+  margin-bottom: var(--space-3);
+}
+
+.gap-gutter {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gap-gutter svg {
+  display: block;
+}
+
+.gap-threads {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* The threads draw themselves in when a diagnosis arrives. Motion here encodes
+   a state change - a thing was found - and nothing else in this component
+   animates. */
+.thread path {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: thread-in var(--dur) var(--ease) forwards;
+}
+.thread circle {
+  opacity: 0;
+  animation: dot-in var(--dur) var(--ease) forwards;
+  animation-delay: calc(var(--dur) * 0.7);
+}
+
+@keyframes thread-in {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dot-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thread path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .thread circle {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .gap {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .gap-side {
+    padding: 0;
+  }
+  .gap-gutter {
+    flex-direction: row;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    border-left: 2px solid var(--rule-strong);
+    padding-left: var(--space-3);
+  }
+  .gap-gutter svg {
+    display: none;
+  }
+  .gap-threads {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: 0;
+  }
+}

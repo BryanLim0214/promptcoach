@@ -1,0 +1,147 @@
+/* Design tokens.
+ *
+ * The brief was an instrument, not an app. Three decisions follow from that and
+ * everything else follows from them.
+ *
+ * 1. Paper, not screen. The ground is a warm off-white and the ink is a warm
+ *    near-black, the way a printed manual reads. No pure #fff, no pure #000, no
+ *    cool grey. Dark mode inverts to a warm charcoal rather than a blue-black.
+ *
+ * 2. Rules, not boxes. Structure comes from hairlines and whitespace. There are
+ *    no cards, no shadows, no border-radius above 2px, no elevation. A shadow
+ *    implies a physical layer this interface does not have.
+ *
+ * 3. Colour means something or it is absent. Six hues for six rubric dimensions,
+ *    desaturated to a matched lightness so no dimension shouts louder than
+ *    another, plus one accent for the diagnosed target. Evidence grade is
+ *    carried by rule style, never by colour, because the three grades are
+ *    ordinal and colour is not.
+ */
+
+:root {
+  /* --- ground and ink --------------------------------------------------- */
+  --paper: #fbfaf7;
+  --paper-sunk: #f4f2ed;
+  --paper-raised: #fefdfb;
+  --ink: #1b1a16;
+  --ink-muted: #5c5850;
+  --ink-faint: #8b867c;
+  --rule: #ddd8cd;
+  --rule-strong: #bdb6a8;
+
+  /* --- the one accent: the diagnosed target ----------------------------- */
+  --accent: #8c2f1e;
+  --accent-wash: #f3e6e1;
+
+  /* --- the six dimensions -----------------------------------------------
+   * A categorical palette: these carry identity, so the only thing that
+   * matters is that a reader can tell any two apart.
+   *
+   * The first version of this was hand-picked for the warm-paper look -
+   * desaturated ink-washes at matched lightness. It failed the validator on
+   * three checks: the hues read as gray, and the worst adjacent pair sat at
+   * normal-vision ΔE 7.6 against a floor of 15, meaning full-colour readers
+   * could not reliably tell them apart either. Matched lightness is exactly
+   * wrong for a categorical scale.
+   *
+   * These are warmer and more muted than a default chart palette but carry
+   * real chroma, and both modes pass every gate:
+   *   light  chroma >= 0.1 · CVD ΔE 9.5 · normal ΔE 19.6 · contrast >= 3:1
+   *   dark   chroma >= 0.1 · CVD ΔE 9.8 · normal ΔE 17.6 · contrast >= 3:1
+   * Re-run scripts/validate_palette.js before changing any of them.
+   * ---------------------------------------------------------------------- */
+  --dim-context_clarity: #1a6fb0;
+  --dim-specificity: #c1552b;
+  --dim-iteration_awareness: #00876a;
+  --dim-audience_awareness: #b8860b;
+  --dim-constraint_setting: #8d4a7a;
+  --dim-reflection: #4f7a2a;
+
+  /* --- type ------------------------------------------------------------- */
+  --face-speech: "Newsreader Variable", "Newsreader", Georgia, serif;
+  --face-ui: "IBM Plex Sans Variable", "IBM Plex Sans", system-ui, sans-serif;
+  --face-artifact: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* A fourth-based scale. Sizes are named for their job, not their pixels. */
+  --t-micro: 0.6875rem; /* 11px - small-caps labels */
+  --t-small: 0.8125rem; /* 13px - metadata, citations */
+  --t-body: 0.9375rem; /* 15px - UI prose */
+  --t-artifact: 1rem; /* 16px - the prompt */
+  --t-speech: 1.1875rem; /* 19px - the student's words */
+  --t-head: 1.375rem;
+  --t-display: 2rem;
+
+  --lh-tight: 1.25;
+  --lh-body: 1.6;
+  --lh-speech: 1.5;
+
+  /* --- rhythm ----------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 18px;
+  --space-5: 28px;
+  --space-6: 44px;
+  --space-7: 68px;
+
+  --measure: 62ch;
+  --hairline: 1px;
+
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur: 220ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16150f;
+    --paper-sunk: #100f0a;
+    --paper-raised: #1e1c15;
+    --ink: #e9e5da;
+    --ink-muted: #a09a8c;
+    --ink-faint: #6e6a5e;
+    --rule: #33302a;
+    --rule-strong: #4a463d;
+
+    --accent: #d4795f;
+    --accent-wash: #2b1f1a;
+
+    /* Selected for the dark surface, not flipped from the light steps. */
+    --dim-context_clarity: #3f8cc9;
+    --dim-specificity: #d06b38;
+    --dim-iteration_awareness: #14a07c;
+    --dim-audience_awareness: #b98a12;
+    --dim-constraint_setting: #a86695;
+    --dim-reflection: #679639;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #16150f;
+  --paper-sunk: #100f0a;
+  --paper-raised: #1e1c15;
+  --ink: #e9e5da;
+  --ink-muted: #a09a8c;
+  --ink-faint: #6e6a5e;
+  --rule: #33302a;
+  --rule-strong: #4a463d;
+
+  --accent: #d4795f;
+  --accent-wash: #2b1f1a;
+
+  /* Identical to the media-query block above. These had been left as the
+     first, rejected palette - the desaturated matched-lightness one that
+     failed the validator at normal-vision ΔE 7.6 - so a reader who set the
+     theme explicitly got the palette that does not work. */
+  --dim-context_clarity: #3f8cc9;
+  --dim-specificity: #d06b38;
+  --dim-iteration_awareness: #14a07c;
+  --dim-audience_awareness: #b98a12;
+  --dim-constraint_setting: #a86695;
+  --dim-reflection: #679639;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0ms;
+  }
+}

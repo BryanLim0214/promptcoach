@@ -1,0 +1,215 @@
+/* Chart chrome.
+ *
+ * Two series appear across these charts and they mean the same thing
+ * everywhere: "reported" is Chapter 4, "measured" is this repository. Colour
+ * follows the entity, so those two roles keep their hue in every chart and a
+ * reader learns the pairing once.
+ *
+ * Text wears text tokens throughout - values, labels and ticks are ink, never
+ * the series colour. The mark beside them carries identity.
+ */
+
+.chart {
+  margin: 0 0 var(--space-5);
+}
+
+.chart-head h3 {
+  font-size: var(--t-body);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.chart-head p {
+  max-width: 46rem;
+}
+
+.chart-svg {
+  width: 100%;
+  height: auto;
+  margin-top: var(--space-3);
+  overflow: visible;
+}
+
+.chart-note {
+  margin-top: var(--space-2);
+  max-width: 46rem;
+}
+
+/* --- legend ------------------------------------------------------------ */
+
+.chart-legend {
+  display: flex;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-top: var(--space-2);
+  font-size: var(--t-small);
+  color: var(--ink-muted);
+}
+.key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.key-mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.key-mark.is-reported {
+  background: var(--paper);
+  border: 2px solid var(--ink-muted);
+}
+.key-mark.is-measured {
+  background: var(--dim-context_clarity);
+}
+
+/* --- marks ------------------------------------------------------------- */
+
+.dot {
+  /* A 2px surface ring so overlapping marks stay separable. */
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+.dot.is-reported {
+  fill: var(--paper);
+  stroke: var(--ink-muted);
+}
+.dot.is-measured {
+  fill: var(--dim-context_clarity);
+}
+
+.dumbbell-bar {
+  stroke: var(--rule-strong);
+  stroke-width: 2;
+}
+.dumbbell.is-hover .dumbbell-bar {
+  stroke: var(--ink-muted);
+}
+.dumbbell.is-hover .row-label {
+  fill: var(--ink);
+}
+
+.interval {
+  stroke: var(--ink-faint);
+  stroke-width: 2;
+}
+.interval-cap {
+  stroke: var(--ink-faint);
+  stroke-width: 1.5;
+}
+
+/* --- axes and background ---------------------------------------------- */
+
+.grid {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+.strip-axis {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+.axis-tick {
+  font-size: 10px;
+  fill: var(--ink-faint);
+  text-anchor: middle;
+  font-family: var(--face-ui);
+  font-variant-numeric: tabular-nums;
+}
+
+.row-label {
+  font-size: 12px;
+  fill: var(--ink-muted);
+  text-anchor: end;
+  font-family: var(--face-ui);
+}
+.row-flag {
+  font-size: 9.5px;
+  fill: var(--ink-faint);
+  font-family: var(--face-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.row-value {
+  font-size: 12px;
+  fill: var(--ink);
+  font-family: var(--face-ui);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Landis and Koch bands. The faintest thing on the chart, because at n=30 the
+   thesis says placement relative to a threshold is not a finding. */
+.band {
+  fill: var(--paper-sunk);
+  opacity: 0.55;
+}
+.band.is-alt {
+  fill: transparent;
+}
+/* Lower-case and unletterspaced. Uppercase at 9px with tracking made
+   "SUBSTANTIAL" and "ALMOST PERFECT" run into each other in adjacent 78px
+   bands; these are Landis and Koch's own terms so they are not abbreviated. */
+.band-label {
+  font-size: 8.5px;
+  fill: var(--ink-faint);
+  text-anchor: end;
+  font-family: var(--face-ui);
+}
+
+/* --- latency strip ----------------------------------------------------- */
+
+.strip-dot {
+  fill: var(--dim-context_clarity);
+  opacity: 0.55;
+}
+.strip-summary line {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+.strip-summary-label {
+  font-size: 10px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-family: var(--face-ui);
+  font-variant-numeric: tabular-nums;
+}
+
+.ref line {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+.ref.is-budget line {
+  stroke: var(--accent);
+}
+.ref-label {
+  font-size: 9px;
+  fill: var(--ink-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: var(--face-ui);
+}
+.ref.is-budget .ref-label {
+  fill: var(--accent);
+}
+
+/* --- stat row ---------------------------------------------------------- */
+
+.stat-row {
+  display: flex;
+  gap: var(--space-6);
+  margin: var(--space-4) 0 0;
+  flex-wrap: wrap;
+}
+.stat-row div {
+  display: grid;
+  gap: 1px;
+}
+.stat-row dd {
+  margin: 0;
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+.stat-row dd.artifact {
+  font-size: var(--t-small);
+  color: var(--ink-muted);
+}

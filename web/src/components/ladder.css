@@ -1,0 +1,79 @@
+.ladder {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rung {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-3) 0;
+  border-top: var(--hairline) solid var(--rule);
+}
+.rung:last-child {
+  border-bottom: var(--hairline) solid var(--rule);
+}
+
+.rung-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  border-left: 2px solid var(--rule);
+  padding-left: var(--space-3);
+}
+.rung.is-active .rung-mark {
+  border-left-color: var(--accent);
+}
+.rung.is-done .rung-mark {
+  border-left-color: var(--ink-muted);
+}
+
+.rung-num {
+  font-family: var(--face-artifact);
+  font-size: var(--t-small);
+  color: var(--ink-faint);
+}
+.rung.is-active .rung-num {
+  color: var(--accent);
+  font-weight: 600;
+}
+.rung.is-done .rung-num {
+  color: var(--ink-muted);
+}
+
+.rung-head {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.rung-gives {
+  font-size: var(--t-body);
+}
+.rung.is-locked .rung-gives,
+.rung.is-locked .rung-state {
+  color: var(--ink-faint);
+}
+.rung.is-active .rung-gives {
+  color: var(--ink);
+}
+
+.rung-state {
+  white-space: nowrap;
+}
+.rung.is-active .rung-state {
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .rung {
+    grid-template-columns: 28px 1fr;
+  }
+  .rung-state {
+    grid-column: 2;
+  }
+}

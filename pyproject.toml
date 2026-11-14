@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "promptcoach-reference"
+version = "1.0.0"
+description = "A runnable reference implementation of the five-layer prompt-engineering instruction framework"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Panhapiseth Lim"}]
+readme = "README.md"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "pydantic>=2.6",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+mcp = ["mcp>=2.3,<3"]
+
+[project.scripts]
+promptcoach-mcp = "promptcoach_ref.mcp_server:main"
+
+[tool.setuptools.packages.find]
+include = ["promptcoach_ref*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q --strict-markers"
+markers = [
+    "contract: layer input/output contract tests",
+    "rejection: normative prohibitions the thesis states",
+    "mechanism: transferred mechanisms behaving as specified",
+    "grade: evidence grades never overstated",
+    "falsifiability: the implementation does not foreclose its own refutation",
+    "statistics: the estimators behind numbers reported in the thesis",
+    "engine: live-model adapters, exercised against a fake transport",
+    "api: HTTP surface",
+    "tour: the guided walkthrough script stays the verified example",
+    "classroom: the classroom aggregates are pinned and comparability is enforced",
+    "devkit: the developer checklist and the MCP server stay faithful to the framework",
+]

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "promptcoach": {
+      "command": "<path-to-repo>/promptcoach-reference/.venv/Scripts/promptcoach-mcp",
+      "args": []
+    }
+  }
+}

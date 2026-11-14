@@ -1,0 +1,95 @@
+.about section {
+  margin-bottom: var(--space-6);
+}
+.about h2 {
+  font-size: var(--t-display);
+  font-weight: 400;
+  margin-bottom: var(--space-3);
+}
+.about h3 {
+  font-size: var(--t-body);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+.about h4 {
+  font-size: var(--t-small);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+.about p + .label {
+  margin-top: var(--space-2);
+}
+
+/* The lede is set in the reading face, larger. It is the thesis speaking, not
+   the interface. */
+.about-big {
+  font-family: var(--face-speech);
+  font-size: var(--t-speech);
+  line-height: var(--lh-speech);
+}
+
+.about-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.about-rq {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.about-rq li {
+  margin-bottom: var(--space-2);
+}
+
+.about-threats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-5);
+}
+.about-threats article {
+  border-top: var(--hairline) solid var(--rule-strong);
+  padding-top: var(--space-3);
+}
+
+.about-non {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+.about-non dt {
+  font-size: var(--t-small);
+}
+.about-non dd {
+  margin: 2px 0 0;
+  max-width: var(--measure);
+}
+
+.about-remaining {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.about-remaining li {
+  margin-bottom: var(--space-2);
+}
+
+.about-runtime {
+  border-top: var(--hairline) solid var(--rule-strong);
+  padding-top: var(--space-4);
+}
+.about-runtime dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+}
+.about-runtime dd {
+  margin: 2px 0 0;
+}
+
+@media (max-width: 860px) {
+  .about-two {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}

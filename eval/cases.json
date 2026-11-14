@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c01-weak-bare",
+    "stated_intent": "I need to write about the water cycle for science",
+    "prompt_text": "water cycle",
+    "paraphrase": "the water cycle"
+  },
+  {
+    "id": "c02-weak-social",
+    "stated_intent": "I want help with my history homework about the pyramids",
+    "prompt_text": "hi can you please help me im really struggling with this thanks so much",
+    "paraphrase": "hello could you please assist me i am genuinely struggling here thank you"
+  },
+  {
+    "id": "c03-weak-delegated",
+    "stated_intent": "I have to hand in a paragraph about recycling",
+    "prompt_text": "write something about recycling and just make it good",
+    "paraphrase": "produce some text on recycling and simply make it excellent"
+  },
+  {
+    "id": "c04-medium-audience",
+    "stated_intent": "Explaining photosynthesis to my little brother",
+    "prompt_text": "explain photosynthesis for a younger reader",
+    "paraphrase": "describe photosynthesis aimed at a younger audience"
+  },
+  {
+    "id": "c05-medium-format",
+    "stated_intent": "I want a short summary I can read out in class",
+    "prompt_text": "summarise the causes of the war in three sentences",
+    "paraphrase": "give a summary of what caused the war in three sentences"
+  },
+  {
+    "id": "c06-medium-constraint",
+    "stated_intent": "Something simple enough for a poster",
+    "prompt_text": "explain gravity at a fourth grade reading level, keep it short",
+    "paraphrase": "describe gravity at a fourth grade reading level and keep it brief"
+  },
+  {
+    "id": "c07-strong-full",
+    "stated_intent": "A handout for classmates who missed the lesson",
+    "prompt_text": "write a one paragraph summary of the water cycle for classmates who missed the lesson, at a sixth grade reading level, no more than 80 words, so that they can catch up before the quiz",
+    "paraphrase": "produce a single paragraph summarising the water cycle for peers who were absent, pitched at a sixth grade reading level, under 80 words, so they can catch up before the test"
+  },
+  {
+    "id": "c08-strong-standard",
+    "stated_intent": "I want to check the answer against something before I trust it",
+    "prompt_text": "explain why the moon has phases for a ten year old in four sentences; a good answer will name the sun, the orbit, and what we actually see from earth, so that i can check it",
+    "paraphrase": "describe why the moon shows phases to a ten year old in four sentences; a good response will mention the sun, the orbit, and what is visible from earth, so i can verify it"
+  },
+  {
+    "id": "c09-strong-iteration",
+    "stated_intent": "I will probably need to ask again once I see it",
+    "prompt_text": "give me a bullet list of three causes of the dust bowl for a class presentation, at a middle school reading level, and then i will ask you to expand whichever one i pick",
+    "paraphrase": "provide a bulleted list of three causes of the dust bowl for a class talk, at a middle school reading level, after which i will ask you to expand the one i choose"
+  },
+  {
+    "id": "c10-noise-borrowed",
+    "stated_intent": "I got this from the last answer and want more like it",
+    "prompt_text": "It is important to note that the multifaceted tapestry of ecological interdependence underscores the fundamental force governing biodiversity",
+    "paraphrase": "It should be noted that the many-sided fabric of ecological interdependence highlights the basic force governing biodiversity"
+  }
+]

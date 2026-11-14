@@ -1,0 +1,378 @@
+Metadata-Version: 2.4
+Name: promptcoach-reference
+Version: 1.0.0
+Summary: A runnable reference implementation of the five-layer prompt-engineering instruction framework
+Author: Panhapiseth Lim
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastapi>=0.110
+Requires-Dist: uvicorn[standard]>=0.27
+Requires-Dist: pydantic>=2.6
+Requires-Dist: httpx>=0.27
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Provides-Extra: mcp
+Requires-Dist: mcp<3,>=2.3; extra == "mcp"
+Dynamic: license-file
+
+# PromptCoach Reference
+
+PromptCoach is the working program built from the **Learning to Prompt
+framework**: a five-layer, evidence-graded design for software that teaches
+middle school students to write prompts, specified in the MS thesis *Learning
+to Prompt: A Design Framework for Middle School AI Literacy* (Panhapiseth Lim,
+The University of Texas Permian Basin, 2026).
+
+It ships with a **plug-in for AI assistants**: an MCP server (MCP is the open
+standard that lets an assistant such as Claude, Gemini CLI, VS Code, or Cursor
+call tools). With it, an assistant can look up the framework and check a tutor
+design against it. See [Developer kit](#developer-kit-the-framework-for-agents-and-builders).
+
+```bash
+git clone https://github.com/BryanLim0214/promptcoach.git
+cd promptcoach
+python -m venv .venv
+.venv/Scripts/python -m pip install -e ".[mcp]"      # .venv/bin/python on macOS/Linux
+claude mcp add --transport stdio promptcoach -- "$(pwd)/.venv/Scripts/promptcoach-mcp"
+```
+
+Released under the MIT License (see `LICENSE`).
+
+The framework was assembled after the studies: two user studies
+(PicPrompt, an image-prompt game, and Promptémon, a prompt-selection game;
+self-report outcomes) and three
+coaching systems built without students (PromptAloud and Proem, MathEduAI,
+PyPal). This repository is the reference implementation described in Chapter 11.
+
+**What running it shows.** That the specification is implementable: each layer's
+output is sufficient for the next layer's input, and the constraints the thesis
+states — including a reasoned same-task revision, a calibration gap that belongs
+to the student, a judge that is a different model from the one that answers
+her, and scoring only the text she composed — can be enforced in code rather
+than in prose.
+
+**What it does not show.** Anything about students. It has not been used with
+students. No student has used the framework, and none used the three builds it
+draws on; the two user studies used earlier games and report self-report
+outcomes. The four components original to the thesis (the taxonomy, the
+progression, the reasoned revision and the calibration gap) are all Argued:
+untested.
+
+---
+
+## Run it
+
+```bash
+# offline — no API key, no network
+python -m venv .venv
+.venv/Scripts/python -m pip install -e ".[dev]"   # .venv/bin/python on macOS/Linux
+.venv/Scripts/python -m pytest                    # 372 tests
+.venv/Scripts/python -m promptcoach_ref.demo      # the worked example, in the terminal
+
+# the app
+cd web && npm install && npm run build && cd ..
+.venv/Scripts/python -m uvicorn promptcoach_ref.api:app --port 8823
+# http://127.0.0.1:8823            the student app
+# http://127.0.0.1:8823/inspect    the researcher view
+```
+
+Use the project venv: a global FastAPI/Starlette mismatch on some machines fails
+at import.
+
+With a key, the layers route to real models:
+
+```bash
+export GEMINI_API_KEY=...               # or OPENROUTER_API_KEY=sk-or-...
+export PROMPTCOACH_GENERATOR=...        # optional: the model that answers her prompt
+export PROMPTCOACH_CROSS_MODEL=1        # optional: a second scorer
+```
+
+To recompute ICC and paraphrase shift with live models, `eval.revalidate` needs
+`OPENROUTER_API_KEY` (without it, the script runs its offline protocol check):
+
+```bash
+export OPENROUTER_API_KEY=sk-or-...
+python -m eval.revalidate
+```
+
+Frontend dev server with hot reload: `cd web && npm run dev` (proxies `/api` to
+port 8823).
+
+---
+
+## Developer kit: the framework for agents and builders
+
+For people building AI tutors that teach prompt writing, the framework is also
+available as tools an AI agent can call:
+
+| | |
+|---|---|
+| `promptcoach-mcp` | An MCP server (stdio, offline, read-only, no key): the 24 components with grades and thesis sections, the rubric, taxonomy, help ladder, bands, commitments, a 24-question design checklist, `audit_tutor_design`, and an offline `coach_attempt` demo |
+| `DEVELOPER_GUIDE.md` | Do and do-not rules for each layer, with evidence grades, client setup, and student-data cautions |
+| `skills/prompt-tutor-design-review/` | An Agent Skill that reviews a tutor design with or without the server |
+| `AGENTS.md` | Rules for coding agents working in this repository |
+
+```bash
+.venv/Scripts/python -m pip install -e ".[mcp]"
+claude mcp add --transport stdio promptcoach -- <path>/.venv/Scripts/promptcoach-mcp
+```
+
+The server only reads `promptcoach_ref/framework`, so it states what the thesis
+states; `tests/test_devkit.py` checks that it never promotes a grade or claims
+learning. The audit reports coverage against the framework, not quality.
+
+---
+
+## The idea that shapes the codebase
+
+The thesis specifies output contracts for Layers 1–4 and **twenty-four other
+things not at all**: per-layer inputs, Layer 5's output, any state machine, the
+confidence formula, sentinel aggregation and threshold, the classifier, the
+ranked-list length, escalation thresholds, de-escalation, the stop condition,
+gating values, the decomposition rules, the task bank, band placement, response
+templates, the worked-contrast generator — and, new with the redesigned
+framework, the minimum length of a revision reason, when the revision hold lets
+go, whether she sees her calibration gap, and which model generates the answer —
+and, after the second review round, what counts as an unchanged prompt for the
+evaluative escalation rule and what counts as a success for the rate and streak.
+
+Builds 2 and 3 supply concrete numbers — 85% + 3 correct, ≤200 characters, 3
+errors — but the thesis marks every one as set *for a task with a correct
+answer*. So the risk is invention laundered as specification. Two packages
+answer it:
+
+| | |
+|---|---|
+| `promptcoach_ref/framework/` | Only what the thesis states. Every constant carries a citation to a **section label** of the thesis (`sec:calibrate`, `sec:promptemon`, …), never a file or a line, and every graded component carries a mechanism grade **and** a need basis. No network, no I/O, no invented values. |
+| `promptcoach_ref/policy/` | Every value the thesis leaves open. Each carries `thesis_says` (the passage proving it is open), `borrowed_from`, `caveat` and `status`. |
+
+`framework` never imports `policy`, and a test enforces it. A `Cite` naming
+anything other than a label from the chapter map cannot be constructed, and the
+traceability generator checks every cited label against `\label{...}` in the
+chapter sources when they are on disk.
+
+### Two grade columns
+
+| Column | Values | Counts (pinned by `test_grades.py`) |
+|---|---|---|
+| Mechanism grade | Direct / Transferred / Argued | 4 / 10 / 10 |
+| Need basis | User studies / Builds / Argument | 4 / 18 / 2 |
+
+24 components. The four Direct rows are Build 1 measurement results on
+benchmarks of 30 items or fewer. A visible consequence before coaching is
+Argued: both games showed students the output first and students accepted it
+(self-report), but the order was never varied, so the mechanism is untested.
+
+### What changed with the redesign
+
+- **Affective state inference is gone.** This implementation had already switched
+  it off, because a long pause before a prompt may be planning rather than
+  struggle; the thesis then removed it from the framework (`sec:not-adopted`).
+  `policy/affect.py` keeps the note that it was tried and removed.
+- **Escalation no longer reads inactivity.** It escalates on repeated failed
+  attempts and explicit requests for help. When the diagnosis is paired with
+  Iteration Awareness or Reflection (blind acceptance, undiagnosed retry,
+  delegated judgment), the repeated-attempt count is not used: help moves up
+  only when she asks or when her new attempt leaves the prompt text unchanged
+  (`escalation.evaluative_pairing`).
+- **Help climbs across revisions of one task** (third review round, E01). A
+  help cycle is the help given on one task for one top-ranked category
+  (`escalation.cycle`). Each revision is first measured by Layer 5 against the
+  attempt it revises. While the same category is still ranked first, the
+  paired dimension has not improved and level 4 has not been issued, the cycle
+  stays open and Layer 4 answers the revision. Help moves up one rung when the
+  same category is ranked first on two consecutive attempts, first attempts and
+  revisions alike (`escalation.consecutive_unresolved` = 2), or when she presses
+  **I need more help** (`asked_for_help`). So a first attempt and three
+  revisions with the same unresolved problem get levels 1, 2, 3 and 4, the
+  last being the worked contrast. The cycle closes when the paired dimension
+  improves, when the top category changes, or on the attempt after level 4,
+  which is recorded as unresolved instead of repeating level 4. A revision
+  never opens a new cycle unless she asks for more help. Before this change a
+  revision always closed the cycle, so help never rose above level 1 in the
+  student's session.
+- **The revision hold and the ladder together.** Her first reasoned revision
+  releases the hold even while the help cycle is still open; she may move on
+  (which starts the next task at level 1) or keep revising (help keeps
+  climbing). An unreasoned revision stops at Layer 1, so it neither raises nor
+  resets help, but it counts toward the four attempts after which the hold
+  releases by itself.
+- **What a success is, for difficulty gating.** An attempt counts as a success
+  when the dimensions its band requires score 3 or higher: every named planning
+  dimension in bands 1–2, three of the four planning dimensions in band 3, one
+  of the two evaluative dimensions in bands 4–5 (`gating.success`). One outcome
+  is recorded each time Layer 5 runs (every scored revision, and a first
+  attempt with nothing to diagnose), so the window and streak count attempts and
+  revisions, not distinct tasks (`gating.streak_unit`); with two tasks per band
+  in this placeholder bank, a streak of three needs a revised or repeated task.
+- **The revision hold lets go by itself.** After four attempts on a task the
+  hold releases automatically, and each release without a reasoned revision is
+  recorded in `Session.gate_exits` (for F7). No route or setting releases it
+  by hand.
+- **Five new components**, each enforced in code:
+
+| Component | Grade / need | Where |
+|---|---|---|
+| Visible consequence before coaching | Argued / User studies | `session.py` runs her prompt before any coaching |
+| Same-task revision with a stated reason | Argued / User studies | `framework/revision.py`, `layers/elicit.py`; switch in `policy/revision.py` |
+| Predicted rating beside the measured score | Argued / User studies | `contracts.calibration_gap`, `layers/calibrate.py`; display switch in `policy/calibration.py` |
+| Judge independent of the generating model | Transferred / Argument | generator is a different model from every judge (`policy/generator.py`); `layers/measure.py` records both |
+| Selecting is not composing | Argued / User studies | `inserted_spans`; `layers/measure.py` scores only what she composed |
+
+`framework/classroom.py` holds the classroom aggregates — Promptémon from the raw
+re-analysis only, PicPrompt from the published article only — each with its
+section label, and a comparability flag per pre/post item pair. A pair whose two
+items were worded differently can never be presented as change.
+
+---
+
+## The five layers
+
+```
+Elicit ──┬─→ Measure ──→ Diagnose ──→ Respond ──→ Calibrate
+         └──────────────────↗ ↗ ↗ ↗
+```
+
+Not a pipeline. *"The dependency is not a single chain: Layer 3 reads Layer 1's
+paired record and the session history directly, because four of its seven
+categories are invisible in the prompt text that Layer 2 scores."*
+
+Around it runs the student's own attempt cycle: **Plan → Write → Predict** (she
+rates the prompt 1 to 4, optional) **→ See** (the prompt runs and she reads what
+it produced) **→ Revise** (the same task, with a short stated reason).
+
+| Layer | Requirement passed downstream | What the redesign added |
+|---|---|---|
+| 1 Elicit | "a paired record of intent and artifact, plus timing" | predicted rating; asks for a reason when a revision has none; records inserted spans |
+| 2 Measure | "six dimension scores with per dimension confidence" | scores only what she composed; records judge and generator |
+| 3 Diagnose | "a ranked list of failure categories with confidence" | reads her composed text |
+| 4 Respond | "the level issued, and whether the next attempt improved…" | treats inserted text as not hers |
+| 5 Calibrate | *— the thesis states none* | calibration gap; whether a reasoned revision is pending |
+
+Layer 5's output shape is ours, and `CalibrateOutput.THESIS_SPECIFIED` is `False`
+to say so.
+
+**Which over-reliance detector runs.** In a live session Layer 5 calls the
+judge engine's model-based detector (`GeminiEngine.sentinel`), which is the
+detector `eval/benchmark.py` measured and the replication AUC describes. The
+keyword rules (`DeterministicEngine.sentinel`) run only in the offline engine:
+they are an **author-tested stand-in**: scored once against the risk labels on the
+authors' own 30 items (AUC 0.847, `eval/offline_sentinel.py`), so not an independent test.
+Every Layer 5 result names its detector in `sentinel_source`. If the detector
+call fails, or the engine has none (OpenRouter), no signals are shown; the
+keyword rules are never substituted for the model. **Layer 3 does not read**
+the sentinel: intent drift, undiagnosed retry, delegated judgment and borrowed
+phrasing are detected by Layer 3's own rules over the plan, the prompt and the
+session history (offline, the rule set; live, the judge model's diagnosis call).
+
+**Help already given is on the record.** Each attempt carries the help
+response it followed (`triggering_intervention_id`), so Layer 3 can see that
+help was offered before an unchanged resubmission. Without it, blind
+acceptance could never fire through `Session.submit`.
+
+**The rule the whole of Layer 4 exists to enforce:** *"no level supplies a
+missing element on her behalf. Guidance may narrow the search space and may not
+close it."* `layers/respond.py::validate` is that sentence as code.
+
+---
+
+## Model routing
+
+Two settings, never one. The **judge** scores her prompt, diagnoses it and
+composes the coaching; the **generator** answers her prompt. They are configured
+separately so the model whose answer she reads is a different model from the one
+that scores her prompt. The requirement is a different *model*, not a different
+vendor: on the Gemini provider the scorer, the comparator and the generator are
+all Google models. Only the OpenRouter defaults put the three on different
+vendors (Anthropic, Google, OpenAI).
+
+| Role | Gemini | OpenRouter | Setting |
+|---|---|---|---|
+| Judge (scorer) | `gemini-3.1-flash-lite` | `anthropic/claude-opus-5` | `PROMPTCOACH_SCORER` (Gemini) |
+| Generator | `gemini-3.1-pro-preview` | `openai/gpt-5.4-mini` | `PROMPTCOACH_GENERATOR` |
+| Cross-model comparator | `gemini-3.8-flash` | `google/gemini-3.8-flash` | `PROMPTCOACH_CROSS_MODEL=1` |
+
+In every shipped configuration the generator is a third model, neither the
+scorer nor the comparator, with or without `PROMPTCOACH_CROSS_MODEL=1`. A live
+configuration whose generator equals a judge **refuses to start** with a message
+naming the collision; it never runs non-independent. Every Measure result also
+records `judge_model`, `generator_model` and `judge_independent_of_generator`.
+Offline, the rule engine judges and a scripted responder answers, unaffected by
+the check. (The Gemini generator is the Pro preview, which was slow in informal
+testing; it answers once per attempt and is off the scoring path.)
+
+Reliability ships as a **command, not a constant**: a coefficient tied to two
+model versions expires when either is retired.
+
+---
+
+## Frontend
+
+Vite + React + TypeScript, in `web/`.
+
+| | |
+|---|---|
+| Behaviour & accessibility | `radix-ui` — unstyled primitives. Accessibility is a framework commitment with a rejection test, not a polish item. |
+| Charts | `d3-scale` only. The meters are bespoke SVG. |
+| Type | Newsreader (the student's speech), IBM Plex Sans (chrome), IBM Plex Mono (the prompt artifact) — vendored via `@fontsource`, so it builds with no network. |
+
+The student app (`/`) shows a task, her prompt's answer, and one question. It now
+also carries a **1–4 confidence control** before she sends, a **reason field** on
+a revision, a line naming **the model that wrote the answer** (and that a
+different model scored the prompt), and — when the policy shows it — her guess
+beside the score, which only she sees. Under each piece of coaching there is an
+**I need more help** control; her next try is sent with `asked_for_help`, and
+the help on it moves up one rung.
+
+The researcher view (`/inspect`): **Session** (the loop), **Trace** (every layer
+opened, with its contract sentence beside the value the code produced),
+**Instrument** (the 24 components with both grade columns, and the twenty-four
+gaps), **About** (thesis statement, research questions, requirements R1–R6,
+threats, remaining work).
+
+---
+
+## Tests
+
+372, hermetic, no network (356 for the framework and app, 16 for the developer kit). Each tier is a `pytest` marker.
+
+| Marker | What it holds |
+|---|---|
+| `contract` | Each layer takes only its input, emits only its output; the new fields (predicted rating, reason, inserted spans, judge/generator, calibration gap, revision pending) exist and behave. |
+| `rejection` | The prohibitions: no level supplies a missing element; the sentinel and calibration data never reach a teacher view; a revision without a reason is not scored; inserted text is not scored as hers; the generator differs from every judge in every shipped live configuration, and a colliding configuration refuses to start; withdrawn figures appear nowhere in the source; audio is never stored; a scoring failure is never a zero; gamification is absent. |
+| `mechanism` | The dual gate refuses to move on rate alone *or* streak alone; the ladder never skips; inactivity and latency-based affect are removed; a first attempt and three revisions reach level 4 through `Session.submit`, an evaluative diagnosis stays put unless she asks, and the revision hold and the ladder work together (`test_review_r3.py`). |
+| `grade` | 24 components; counts pinned at 4 / 10 / 10 and 4 / 18 / 2; every citation is a section label (checked against the chapter sources when present). |
+| `falsifiability` | The implementation keeps what its own refutation needs: unpaired deltas (F2), both selection modes (F4), the reason requirement as a switch (F7), the gap display as a switch with the gap still recorded (F8), judge and generator on every attempt (F9). |
+| `classroom` | Aggregates pinned to the raw re-analysis and the published PicPrompt numbers; non-comparable pairs can never be presented as change. |
+| `devkit` | The design checklist covers all 24 components without promoting a grade; the audit never claims quality or learning; every MCP tool is read-only and closed-world; the server answers over real stdio. |
+
+Plus `test_worked_example.py`, the golden transcript: the thesis's worked example
+replayed, asserting the thesis's own claims about it.
+
+```bash
+.venv/Scripts/python -m pytest -m falsifiability -v
+```
+
+---
+
+## Traceability
+
+`TRACEABILITY.md` is generated, never hand-edited:
+
+```bash
+.venv/Scripts/python -m promptcoach_ref.traceability
+```
+
+It maps all thirteen chapters to module and test, checks every cited section
+label, lists the twenty-four graded components with both columns, the classroom
+item pairs with their comparability, the twenty-four gaps with what was chosen
+instead, and names what is **not implementable** and why — the teacher-agreement
+bar, classroom feasibility of speech capture, taxonomy coverage, the band
+ordering, whether the reasoned revision or the visible gap does anything, and
+any instructional effect at all.
+
+That last list is the point of the document. A reference implementation that
+quietly skipped the things it could not do would be a worse baseline than one
+that names them.

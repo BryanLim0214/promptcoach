@@ -1,0 +1,440 @@
+/* The student's application.
+ *
+ * Different design problem from the inspector: one person, one task, no
+ * research furniture. So the type is larger, the measure is narrower, there is
+ * one action visible at a time, and the answer is the biggest thing on screen.
+ */
+
+.coach {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-5) var(--space-6);
+}
+
+.coach-pick {
+  max-width: 68rem;
+  padding-top: var(--space-5);
+}
+
+.coach h1 {
+  font-family: var(--face-speech);
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-3);
+}
+
+.coach-lede {
+  font-size: 1.0625rem;
+  color: var(--ink-muted);
+  max-width: 34rem;
+  margin-bottom: var(--space-6);
+}
+
+.coach-error {
+  color: var(--accent);
+  margin: var(--space-3) 0;
+}
+
+/* --- mission picker ---------------------------------------------------- */
+
+/* Two columns. Ten tasks in one stack made the picker a 1400px scroll of
+   mostly empty page; side by side they fit on a screen. */
+.missions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+  gap: var(--space-3);
+  align-items: stretch;
+}
+.missions li {
+  display: flex;
+}
+
+.mission {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--paper-raised);
+  border: var(--hairline) solid var(--rule);
+  border-left: 3px solid var(--rule);
+  border-radius: 2px;
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: border-left-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+.mission:hover {
+  border-left-color: var(--accent);
+  transform: translateX(2px);
+}
+.mission-text {
+  font-family: var(--face-speech);
+  font-size: 1.0625rem;
+  line-height: 1.45;
+}
+.mission:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.mission:disabled:hover {
+  transform: none;
+  border-left-color: var(--rule);
+}
+
+.coach-tourcta {
+  margin-top: var(--space-5);
+}
+
+/* --- the task banner --------------------------------------------------- */
+
+.coach-task {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  border-bottom: var(--hairline) solid var(--rule);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.coach-task p {
+  font-family: var(--face-speech);
+  font-size: 1.0625rem;
+  max-width: 44rem;
+}
+
+.linkish {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rule-strong);
+  padding: 0 0 1px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  font-size: var(--t-small);
+  white-space: nowrap;
+}
+.linkish:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* --- asking ------------------------------------------------------------ */
+
+/* Side by side: what she meant on the left, what she typed on the right. The
+   same spatial relation the thesis's intent-artifact gap describes, and it
+   stops the form running down a narrow strip of a wide screen. */
+.ask {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4) var(--space-5);
+  align-items: start;
+}
+.ask-go {
+  grid-column: 1 / -1;
+}
+
+.ask-field label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: var(--space-2);
+}
+.hint {
+  color: var(--ink-faint);
+  font-size: var(--t-small);
+  font-weight: 400;
+}
+
+.ask textarea {
+  width: 100%;
+  background: var(--paper-raised);
+  border: var(--hairline) solid var(--rule);
+  border-radius: 2px;
+  padding: var(--space-3);
+  resize: vertical;
+  font-family: var(--face-speech);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+.ask textarea.mono {
+  font-family: var(--face-artifact);
+  font-size: 0.9375rem;
+}
+.ask textarea:hover {
+  border-color: var(--rule-strong);
+}
+
+.ask-intent {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+.ask-intent textarea {
+  flex: 1;
+}
+
+.mic {
+  background: none;
+  border: var(--hairline) solid var(--rule-strong);
+  border-radius: 2px;
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  font-size: var(--t-small);
+  white-space: nowrap;
+  color: var(--ink-muted);
+}
+.mic:hover {
+  color: var(--ink);
+  border-color: var(--ink-muted);
+}
+.mic.is-live {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.ask-go {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.go {
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  border-radius: 2px;
+  padding: var(--space-3) var(--space-5);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity var(--dur) var(--ease);
+}
+.go:hover:not(:disabled) {
+  opacity: 0.88;
+}
+.go:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.coach-clarify {
+  color: var(--accent);
+  font-size: var(--t-small);
+}
+
+/* --- the answer: the biggest thing on the screen ----------------------- */
+
+.answer {
+  margin-top: var(--space-5);
+  border-top: var(--hairline) solid var(--rule);
+  padding-top: var(--space-4);
+}
+.answer h2 {
+  font-family: var(--face-speech);
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: var(--space-4);
+}
+
+.answer-body {
+  font-family: var(--face-speech);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.answer-single {
+  max-width: 42rem;
+}
+
+.answer-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.answer-col {
+  border-top: 2px solid var(--rule);
+  padding-top: var(--space-3);
+}
+.answer-col.is-new {
+  border-top-color: var(--accent);
+}
+.answer-col.is-old .answer-body,
+.answer-col.is-old .answer-prompt {
+  color: var(--ink-muted);
+}
+
+.answer-tag {
+  font-size: var(--t-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: var(--space-1);
+}
+.answer-tag + .answer-tag,
+.answer-body + .answer-tag {
+  margin-top: var(--space-4);
+}
+
+.answer-prompt {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  margin-bottom: var(--space-2);
+}
+
+.answer-note {
+  margin-top: var(--space-4);
+}
+
+/* --- one question ------------------------------------------------------ */
+
+.nudge {
+  margin-top: var(--space-5);
+  border-left: 3px solid var(--accent);
+  padding: var(--space-2) 0 var(--space-2) var(--space-4);
+  max-width: 42rem;
+}
+.nudge.is-done {
+  border-left-color: var(--rule-strong);
+}
+/* The section had only an aria-label, so a sighted student got an unheaded
+   paragraph of red-ruled text and had to infer what it was for. */
+.nudge-label {
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+.nudge.is-done .nudge-label {
+  color: var(--ink-faint);
+}
+.nudge-text {
+  font-family: var(--face-speech);
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  margin-bottom: var(--space-2);
+}
+/* What to do about it, set apart from the question itself - the question is
+   hers to answer, this line is only the mechanics of answering it. */
+.nudge-do {
+  border-top: var(--hairline) solid var(--rule);
+  padding-top: var(--space-2);
+  max-width: 34rem;
+}
+.nudge button {
+  margin-top: var(--space-3);
+}
+
+.loop {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.loop-why {
+  margin-top: var(--space-3);
+}
+
+/* The answer arrives; it does not slide, bounce or fade in from a direction.
+   A short settle is enough to say "this is new" without performing. */
+.answer {
+  animation: settle 260ms var(--ease);
+}
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .answer {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .ask {
+    grid-template-columns: 1fr;
+  }
+  .answer-pair {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  .coach {
+    padding: var(--space-4) var(--space-4) var(--space-6);
+  }
+  .missions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Predict, and the reason on a revision ------------------------------ */
+
+.ask input[type="text"] {
+  width: 100%;
+  background: var(--paper-raised);
+  border: var(--hairline) solid var(--rule);
+  border-radius: 2px;
+  padding: var(--space-3);
+  font-family: var(--face-speech);
+  font-size: 1.0625rem;
+}
+
+.ask-field.predict {
+  grid-column: 1 / -1;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.ask-field.predict legend {
+  font-size: 1rem;
+  margin-bottom: var(--space-2);
+}
+.predict-scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+.predict-scale label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1, 4px);
+  border: var(--hairline) solid var(--rule);
+  border-radius: 2px;
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  margin: 0;
+}
+.predict-scale label.is-on {
+  border-color: var(--ink);
+}
+.predict-scale input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.predict-scale label:focus-within {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.generator-label,
+.calibration-note {
+  margin-top: var(--space-2);
+}
+
+/* --- "I need more help" ------------------------------------------------- */
+
+.nudge-help {
+  margin-top: var(--space-3);
+}
+.linkish.is-on {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+  font-weight: 600;
+}

@@ -1,0 +1,196 @@
+{
+  "_construction": {
+    "note": "Authored for this implementation, built to the construction the thesis describes for the Proem benchmark (Chapter 6, Build Study One) so the results can be compared with Chapter 6's. Tier and risk labels were fixed before any scoring and by the same author who wrote the items, which is the same limitation the thesis records.",
+    "n": 30,
+    "clean": 15,
+    "noise": 15,
+    "tiers": { "weak": 11, "medium": 12, "strong": 7 },
+    "high_risk": 9,
+    "high_risk_composition": { "sarcastic": 2, "pasted_ai_text": 4, "mindless_retry": 3 }
+  },
+  "items": [
+    {
+      "id": "w01", "tier": "weak", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I need to do something on the water cycle for science class",
+      "prompt_text": "water cycle",
+      "paraphrase": "the water cycle"
+    },
+    {
+      "id": "w02", "tier": "weak", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "We are learning about plants and I have to explain photosynthesis",
+      "prompt_text": "photosynthesis",
+      "paraphrase": "photosynthesis please"
+    },
+    {
+      "id": "w03", "tier": "weak", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I have a history assignment about the second world war",
+      "prompt_text": "write about ww2",
+      "paraphrase": "produce something about world war two"
+    },
+    {
+      "id": "w04", "tier": "weak", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I am stuck on my fractions homework and need it explained",
+      "prompt_text": "help with math",
+      "paraphrase": "assist me with maths"
+    },
+    {
+      "id": "w05", "tier": "weak", "clean": false, "risk": "high", "noise_kind": "sarcastic",
+      "stated_intent": "I have to write a book report and I really do not want to",
+      "prompt_text": "oh great another essay, just do the whole thing for me why don't you",
+      "paraphrase": "wonderful, one more essay, so just complete the entire thing on my behalf"
+    },
+    {
+      "id": "w06", "tier": "weak", "clean": false, "risk": "high", "noise_kind": "sarcastic",
+      "stated_intent": "There is a worksheet due tomorrow about the solar system",
+      "prompt_text": "sure because i totally love homework, write it, whatever",
+      "paraphrase": "of course, since I absolutely adore homework, just write it, anyway"
+    },
+    {
+      "id": "w07", "tier": "weak", "clean": false, "risk": "high", "noise_kind": "mindless_retry",
+      "stated_intent": "That answer was not right so I am sending it again",
+      "prompt_text": "explain gravity",
+      "paraphrase": "describe gravity",
+      "history": ["explain gravity"]
+    },
+    {
+      "id": "w08", "tier": "weak", "clean": false, "risk": "high", "noise_kind": "mindless_retry",
+      "stated_intent": "It gave me something weird so I am trying again",
+      "prompt_text": "summarize the chapter",
+      "paraphrase": "summarise the chapter",
+      "history": ["summarize the chapter"]
+    },
+    {
+      "id": "w09", "tier": "weak", "clean": false, "risk": "high", "noise_kind": "mindless_retry",
+      "stated_intent": "Did not like that one, sending the same thing",
+      "prompt_text": "tell me about the amazon rainforest",
+      "paraphrase": "inform me about the amazon rainforest",
+      "history": ["tell me about the amazon rainforest"]
+    },
+    {
+      "id": "w10", "tier": "weak", "clean": false, "risk": "high", "noise_kind": "pasted_ai_text",
+      "stated_intent": "I liked what it said last time so I am using that as my question",
+      "prompt_text": "It is important to note that the multifaceted tapestry of ecological interdependence underscores the fundamental force governing biodiversity",
+      "paraphrase": "It should be noted that the many sided fabric of ecological interdependence highlights the basic force governing biodiversity"
+    },
+    {
+      "id": "w11", "tier": "weak", "clean": false, "risk": "low", "noise_kind": "disfluent",
+      "stated_intent": "Um I need like the thing about um the rock cycle for tomorrow",
+      "prompt_text": "um so like the rock cycle thing uh you know for the the class",
+      "paraphrase": "so the rock cycle matter for the class"
+    },
+    {
+      "id": "m01", "tier": "medium", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "My little brother keeps asking and I want to tell him properly",
+      "prompt_text": "explain photosynthesis for a younger reader",
+      "paraphrase": "describe photosynthesis aimed at a younger audience"
+    },
+    {
+      "id": "m02", "tier": "medium", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I need something short enough to read out loud in class",
+      "prompt_text": "summarise the causes of the civil war in three sentences",
+      "paraphrase": "give a summary of what caused the civil war in three sentences"
+    },
+    {
+      "id": "m03", "tier": "medium", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "It has to fit on a poster so it cannot be long or complicated",
+      "prompt_text": "explain gravity at a fourth grade reading level, keep it short",
+      "paraphrase": "describe gravity at a fourth grade reading level and keep it brief"
+    },
+    {
+      "id": "m04", "tier": "medium", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I want a list I can turn into slides for the group",
+      "prompt_text": "give me a bullet list of the main causes of the dust bowl for a class presentation",
+      "paraphrase": "provide a bulleted list of the principal causes of the dust bowl for a class talk"
+    },
+    {
+      "id": "m05", "tier": "medium", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "This is for classmates who were absent and need to catch up",
+      "prompt_text": "write a short paragraph on the water cycle for classmates who missed the lesson",
+      "paraphrase": "compose a brief paragraph about the water cycle for peers who were away"
+    },
+    {
+      "id": "m06", "tier": "medium", "clean": false, "risk": "high", "noise_kind": "pasted_ai_text",
+      "stated_intent": "This is what it gave me before and I want more like it but shorter",
+      "prompt_text": "Delve into the multifaceted dimensions of photosynthetic processes, underscoring the intricate interplay between light absorption and carbon fixation, in three sentences",
+      "paraphrase": "Explore the many sided aspects of photosynthetic processes, highlighting the complex interaction between light absorption and carbon fixation, in three sentences"
+    },
+    {
+      "id": "m07", "tier": "medium", "clean": false, "risk": "high", "noise_kind": "pasted_ai_text",
+      "stated_intent": "I copied the good bits from the last answer into my question",
+      "prompt_text": "Furthermore, elucidate the pivotal role that tectonic activity plays in shaping our planet's dynamic surface, for a middle school audience",
+      "paraphrase": "Moreover, clarify the crucial part tectonic activity plays in forming our planet's changing surface, for a middle school audience"
+    },
+    {
+      "id": "m08", "tier": "medium", "clean": false, "risk": "high", "noise_kind": "pasted_ai_text",
+      "stated_intent": "Using its own words back at it to get a better answer",
+      "prompt_text": "In conclusion, the rich tapestry of the Roman Republic's political institutions warrants further examination; expand on this in one paragraph",
+      "paraphrase": "To conclude, the varied fabric of the Roman Republic's political institutions deserves more study; enlarge on this in one paragraph"
+    },
+    {
+      "id": "m09", "tier": "medium", "clean": false, "risk": "low", "noise_kind": "ell",
+      "stated_intent": "I want to explain this to my grandmother who does not read English well",
+      "prompt_text": "please explain the digestive system with simple word, for my grandmother she not read english good, maybe 5 sentence",
+      "paraphrase": "kindly describe the digestive system using simple words, for my grandmother who does not read English well, perhaps five sentences"
+    },
+    {
+      "id": "m10", "tier": "medium", "clean": false, "risk": "low", "noise_kind": "typos",
+      "stated_intent": "For a poster in the hallway that younger kids will walk past",
+      "prompt_text": "explan the moon phasses for littel kids on a postor, keep it under 50 wrods",
+      "paraphrase": "explain the moon phases for young children on a poster, keep it under fifty words"
+    },
+    {
+      "id": "m11", "tier": "medium", "clean": false, "risk": "low", "noise_kind": "disfluent",
+      "stated_intent": "I am trying to get something I can actually use for the quiz review",
+      "prompt_text": "so like can you do um a summary of the chapter but like short, for studying, maybe bullet points i guess",
+      "paraphrase": "could you produce a summary of the chapter but short, for studying, perhaps bullet points"
+    },
+    {
+      "id": "m12", "tier": "medium", "clean": false, "risk": "low", "noise_kind": "deferent",
+      "stated_intent": "I have a paragraph to write about recycling and I am not sure what good looks like",
+      "prompt_text": "write a paragraph about recycling for my class and just make it good, you know what works",
+      "paraphrase": "compose a paragraph on recycling for my class and simply make it excellent, you know what works"
+    },
+    {
+      "id": "s01", "tier": "strong", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "A handout for classmates who missed the lesson before the quiz",
+      "prompt_text": "write a one paragraph summary of the water cycle for classmates who missed the lesson, at a sixth grade reading level, no more than 80 words, so they can catch up before the quiz",
+      "paraphrase": "produce a single paragraph summarising the water cycle for peers who were absent, pitched at a sixth grade reading level, under eighty words, so they can catch up before the test"
+    },
+    {
+      "id": "s02", "tier": "strong", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I want to check the answer against something before I trust it",
+      "prompt_text": "explain why the moon has phases for a ten year old in four sentences; a good answer will name the sun, the orbit, and what we actually see from earth, so that i can check it",
+      "paraphrase": "describe why the moon shows phases to a ten year old in four sentences; a good response will mention the sun, the orbit, and what is visible from earth, so I can verify it"
+    },
+    {
+      "id": "s03", "tier": "strong", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I will need to ask a follow up once I see which cause is most interesting",
+      "prompt_text": "give me three causes of the dust bowl as bullet points for a class presentation at a middle school reading level, and then i will ask you to expand whichever one i pick",
+      "paraphrase": "provide three causes of the dust bowl as bullets for a class talk at a middle school reading level, after which I will ask you to expand the one I choose"
+    },
+    {
+      "id": "s04", "tier": "strong", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "This has to work as a script I read aloud to eight year olds at the science fair",
+      "prompt_text": "write a 60 second spoken script explaining why the sky is blue to eight year olds at a science fair, in plain words with no jargon, and end on a question i can ask them",
+      "paraphrase": "compose a sixty second spoken script explaining why the sky is blue to eight year olds at a science fair, in plain language without jargon, ending with a question I can pose to them"
+    },
+    {
+      "id": "s05", "tier": "strong", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I want to compare two sides fairly for a debate I have to argue",
+      "prompt_text": "list two arguments for and two against school uniforms, one sentence each, for a middle school debate, keeping both sides equally strong so i can pick which to argue",
+      "paraphrase": "give two arguments in favour of and two opposed to school uniforms, one sentence each, for a middle school debate, keeping both sides equally strong so I can choose which to argue"
+    },
+    {
+      "id": "s06", "tier": "strong", "clean": true, "risk": "low", "noise_kind": null,
+      "stated_intent": "I need to know what makes an answer good before I read one",
+      "prompt_text": "before you answer, a good explanation of erosion for a fifth grader would name the cause, the timescale, and one thing they could see outside; now explain erosion that way in five sentences",
+      "paraphrase": "before responding, a good explanation of erosion for a fifth grader would state the cause, the timescale, and one thing visible outdoors; now explain erosion that way in five sentences"
+    },
+    {
+      "id": "s07", "tier": "strong", "clean": false, "risk": "low", "noise_kind": "ell",
+      "stated_intent": "I am writing this for my cousin in my country who is learning English",
+      "prompt_text": "please write explanation of how vaccine work, for my cousin she is 12 and learning english, use simple word but do not make it babyish, about 100 word, and good answer will say what is in vaccine and why body remember it",
+      "paraphrase": "kindly write an explanation of how vaccines work, for my cousin who is twelve and learning English, using simple words without being babyish, around one hundred words, and a good answer will state what is in a vaccine and why the body remembers it"
+    }
+  ]
+}

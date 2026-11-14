@@ -1,0 +1,86 @@
+.flow {
+  margin: 0;
+}
+
+.flow-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Recessive by default; lit only where something actually ran. */
+.flow-edge,
+.flow-back {
+  stroke: var(--rule);
+  stroke-width: 1.5;
+  fill: none;
+  transition: stroke var(--dur) var(--ease);
+}
+.flow-edge.is-lit {
+  stroke: var(--ink-muted);
+}
+.flow-back {
+  stroke-dasharray: 3 4;
+}
+.flow-back.is-lit {
+  stroke: var(--ink-faint);
+}
+
+.flow-box {
+  fill: var(--paper-raised);
+  stroke: var(--rule);
+  stroke-width: 1;
+  transition: stroke var(--dur) var(--ease), fill var(--dur) var(--ease);
+}
+.flow-node.is-ran .flow-box {
+  stroke: var(--ink-muted);
+}
+.flow-node.is-active .flow-box {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.flow-n {
+  font-family: var(--face-artifact);
+  font-size: 11px;
+  fill: var(--ink-faint);
+}
+.flow-node.is-active .flow-n {
+  fill: var(--accent);
+}
+
+.flow-name {
+  font-family: var(--face-ui);
+  font-size: 13px;
+  fill: var(--ink-faint);
+}
+.flow-node.is-ran .flow-name,
+.flow-node.is-active .flow-name {
+  fill: var(--ink);
+}
+
+.flow-owns {
+  font-family: var(--face-ui);
+  font-size: 10.5px;
+  fill: var(--ink-faint);
+}
+
+/* Evidence grade, same rule-weight semiotics as the rest of the interface. */
+.flow-grade {
+  stroke: var(--ink-muted);
+  stroke-width: 2;
+}
+.flow-grade.is-direct {
+  stroke-dasharray: none;
+}
+.flow-grade.is-transferred {
+  stroke-dasharray: 5 3;
+}
+.flow-grade.is-argued {
+  stroke-dasharray: 1.5 3;
+}
+
+.flow-caption {
+  margin-top: var(--space-2);
+  max-width: 52rem;
+}

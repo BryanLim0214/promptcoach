@@ -1,0 +1,91 @@
+.telemetry {
+  max-width: 68rem;
+}
+
+.tel-block {
+  margin-bottom: var(--space-6);
+}
+.tel-block h2 {
+  font-size: var(--t-head);
+  font-weight: 500;
+  border-bottom: var(--hairline) solid var(--rule-strong);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.tel-block > p {
+  margin-bottom: var(--space-3);
+}
+
+/* Charts do not stretch to the full page width. A 640-unit viewBox blown up to
+   1100px scales the type down relative to the marks and spreads six rows over
+   a screen height; capping it keeps the intended proportions. */
+.tel-block .chart,
+.tel-block .flow {
+  max-width: 46rem;
+}
+.tel-block .flow {
+  max-width: 56rem;
+}
+
+/* The scope caveat is not a footnote. It qualifies every number under it. */
+.tel-scope {
+  border-left: 2px solid var(--accent);
+  padding-left: var(--space-3);
+}
+
+.tel-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.tel-stat {
+  display: grid;
+  gap: 1px;
+  border-top: 2px solid var(--rule);
+  padding-top: var(--space-2);
+}
+.tel-stat-value {
+  font-size: 1.75rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.tel-stat-unit {
+  font-size: 0.875rem;
+  color: var(--ink-faint);
+}
+.tel-unstable {
+  color: var(--accent);
+}
+
+.tel-runs {
+  max-width: 32rem;
+}
+.tel-runs .is-flag {
+  color: var(--accent);
+}
+
+.tel-signals {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 34rem;
+}
+.tel-signal-name {
+  font-size: var(--t-small);
+  margin-bottom: var(--space-1);
+}
+.tel-signal-track {
+  height: 6px;
+  background: var(--paper-sunk);
+  border-radius: 1px;
+  position: relative;
+  margin-bottom: 2px;
+}
+.tel-signal-track span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--dim-context_clarity);
+  border-radius: 1px;
+  transition: width var(--dur) var(--ease);
+}
